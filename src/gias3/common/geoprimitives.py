@@ -19,8 +19,8 @@ from scipy.linalg import eig, inv
 from scipy.optimize import leastsq, fmin
 from scipy.spatial.distance import euclidean
 
-from gias2.common import transform3D
-from gias2.common.math import norm, mag, angle
+from gias3.common import transform3D
+from gias3.common.math import norm, mag, angle
 
 """ 
 functions and classes for fitting meshes to segmented data

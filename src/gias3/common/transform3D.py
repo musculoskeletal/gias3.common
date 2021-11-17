@@ -17,7 +17,7 @@ import numpy
 from numpy.linalg import inv
 from numpy.linalg import svd, det
 
-from gias2.common import math
+from gias3.common import math
 
 
 def calcAffineMatrix(

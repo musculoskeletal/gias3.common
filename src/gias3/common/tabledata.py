@@ -11,15 +11,14 @@ License, v. 2.0. If a copy of the MPL was not distributed with this
 file, You can obtain one at http://mozilla.org/MPL/2.0/.
 ===============================================================================
 """
-
 import numpy as np
 
 
 class Classification(object):
 
-    def __init__(self, name, labelsDict, code):
+    def __init__(self, name, labels_dict, code):
         self.name = name
-        self.labels = labelsDict
+        self.labels = labels_dict
         self.code = code
 
 
@@ -36,32 +35,29 @@ class TableData(object):
     def addClassification(self, classification):
         self._classifications[classification.name] = classification
 
-    def setData(self, headers, rows, units, dataArray):
+    def setData(self, headers, rows, units, data_array):
         self._headers = list(headers)
         self._rowLabels = list(rows)
         self._units = list(units)
-        self._dataArray = np.array(dataArray)
+        self._dataArray = np.array(data_array)
 
     def addDataColumn(self, header, unit, data):
         self._headers.append(header)
         self._units.append(unit)
         self._dataArray = np.hstack([self._dataArray, data[:, np.newaxis]])
 
-    def addDataRow(self, rowLabel, data):
-        self._rowLabels = self._rowLabels.append(rowLabel)
+    def addDataRow(self, row_label, data):
+        self._rowLabels = self._rowLabels.append(row_label)
         self._dataArray = np.vstack([self._dataArray, data])
 
     def getClasses(self):
         return list(self._classifications.keys())
 
-    def getLabelsForClass(self, classificationName):
-        return self._classifications[classificationName].labels
+    def getLabelsForClass(self, classification_name):
+        return self._classifications[classification_name].labels
 
     def getHeaders(self):
         return self._headers
-
-    def getRowLabels(self):
-        return self._rowLabels
 
     def getUnits(self):
         return self._units
@@ -69,17 +65,17 @@ class TableData(object):
     def getUnitsForHeader(self, header):
         return self._units[self._headers.index(header)]
 
-    def getData(self, header, classificationName=None, classLabel=None):
+    def getData(self, header, classification_name=None, class_label=None):
         data = self._dataArray[:, self._headers.index(header)]
-        if classificationName != None:
-            C = self._classifications[classificationName]
-            data = data[C.code == C.labels[classLabel]]
+        if classification_name is not None:
+            C = self._classifications[classification_name]
+            data = data[C.code == C.labels[class_label]]
 
         return data
 
-    def getRowLabels(self, classificationName=None, classLabel=None):
-        if classificationName == None:
+    def getRowLabels(self, classification_name=None, class_label=None):
+        if classification_name is None:
             return self._rowLabels
         else:
-            C = self._classifications[classificationName]
-            return [self._rowLabels[i] for i in np.where(C.code == C.labels[classLabel])[0]]
+            C = self._classifications[classification_name]
+            return [self._rowLabels[i] for i in np.where(C.code == C.labels[class_label])[0]]
